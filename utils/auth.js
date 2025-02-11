@@ -9,9 +9,10 @@ if (!AUTH0_CLIENT_ID) throw new Error("AUTH0_CLIENT_ID not set");
 if (!AUTH0_SECRET) throw new Error("AUTH0_SECRET not set");
 
 let cachedToken = null;
+let tokenExpiry = null;
 
 export async function getVdcsBearer() {
-    if (cachedToken) return cachedToken;
+    if (cachedToken && tokenExpiry && Date.now() < tokenExpiry) return cachedToken;
 
     const response = await fetch(`https://${AUTH0_DOMAIN}/oauth/token`, {
         method: "POST",
@@ -28,5 +29,6 @@ export async function getVdcsBearer() {
 
     const data = await response.json();
     cachedToken = data.access_token;
+    tokenExpiry = Date.now() + data.expires_in * 1000;
     return cachedToken;
 }
