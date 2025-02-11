@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Loader } from "../components/loader";
 import styles from "../styles/index.module.css";
 import { useQRCode } from 'next-qrcode';
 
@@ -114,13 +115,16 @@ export default function Home() {
         <h1 className={styles.title}>Credential Verification</h1>
         <div className={styles.loaderContainer}>
           {loading ? null : (
-            <button className={styles.button} onClick={onClick}>
-              Start Presentation Flow
-            </button>
+              <button className={styles.button} onClick={onClick}>
+                Start Presentation Flow
+              </button>
           )}
         </div>
+        {loading && !engagement && (
+            <Loader/>
+        )}
         {engagement && !presentation && loading && (
-            <div style={{ textAlign: 'center' }}>
+            <div style={{textAlign: 'center'}}>
               <p>Scan the QRCode</p>
 
               <div className={styles.qrCodeContainer}>
@@ -161,9 +165,9 @@ export default function Home() {
             </div>
         )}
         {engagement && (
-          <button className={styles.reset} onClick={reset}>
-            Reset
-          </button>
+            <button className={styles.reset} onClick={reset}>
+              Reset
+            </button>
         )}
       </main>
     </div>
