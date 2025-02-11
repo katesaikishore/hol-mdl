@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Loader } from "../components/loader";
 import styles from "../styles/index.module.css";
 import { useQRCode } from 'next-qrcode';
 
@@ -114,9 +113,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>Credential Verification</h1>
         <div className={styles.loaderContainer}>
-          {loading ? (
-            <Loader />
-          ) : (
+          {loading ? null : (
             <button className={styles.button} onClick={onClick}>
               Start Presentation Flow
             </button>
@@ -147,9 +144,9 @@ export default function Home() {
               <br/>
               Click{" "}
               <a href={engagement} target="_blank" rel="noreferrer">
-                HERE
+                here
               </a>{" "}
-              to open wallet and preset your credential
+              to open your wallet and present your credential
             </div>
         )}
         {engagement && !presentation ? (
